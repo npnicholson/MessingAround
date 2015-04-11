@@ -5,7 +5,7 @@ public class TableList {
 
     public TableList() {
         String[] letters = {"a","b","c","d","e","f","g","h","i","j","k","l",
-            "m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+            "m","n","o","p","q","r","s","t","u","v","w","x","y","z","~"};
         alph = new Word[letters.length];
         for(int i = letters.length-1; i >= 0; i--) {
             alph[i] = new Word(letters[i]);
@@ -30,6 +30,7 @@ public class TableList {
             if (index.compareTo(word) > 0) {
                 prev.next = new Word(word);
                 prev.next.next = index;
+                numWords++;
                 return prev.next;
             } else {
                 return index;
@@ -40,8 +41,9 @@ public class TableList {
 
     public void add(String word, String url) {
         Word w = addWord(word);
-        if (w != null)
+        if (w != null) {
             w.addUrl(url);
+        }
     }
 
     public Word getWord(String w) {
@@ -60,8 +62,21 @@ public class TableList {
         return null;
     }
 
+    public String[] getSites(String w) {
+        return getWord(w).getSites();
+    }
+
     public int getNumWords() {
         return numWords;
     }
 
+    public String toString() {
+        String str = "";
+        Word crawl = alph[0];
+        for(int i = 0; i < numWords; i++) {
+            str += crawl;
+            crawl = crawl.next;
+        }
+        return str;
+    }
 }

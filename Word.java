@@ -16,17 +16,22 @@ public class Word {
 
     public void addUrl(String url) {
         if (url != null) {
+            //System.out.println("URL: " + url);
             if (numUrls == 0) {
+                //System.out.println("New URL");
                 head = new UrlHolder(url);
                 numUrls++;
                 tail = head;
             } else {
                 UrlHolder index = contains(url);
                 if(index != null) {
+                    //System.out.println("Existing URL");
                     index.inc();
                     sort(index);
-                } else { // TODO Place this new UrlHolder at the front of the
-                         //      elements with a freq of 1 rather than the back.
+                } else {
+                    //System.out.println("New URL");
+                        // TODO Place this new UrlHolder at the front of the
+                        //      elements with a freq of 1 rather than the back.
                     index = new UrlHolder(url);
                     numUrls++;
                     tail.next = index;
@@ -40,7 +45,7 @@ public class Word {
     private UrlHolder contains(String url) {
         if (numUrls != 0) {
             UrlHolder crawl = head;
-            while(crawl != tail) {
+            for(int i = 0; i < numUrls; i++) {
                 if (crawl.getUrl().equals(url)) {
                     return crawl;
                 } else {
@@ -93,19 +98,21 @@ public class Word {
         return word;
     }
 
-    public UrlHolder[] getSites(int num) {
+    public String[] getSites(int num) {
         if(num > numUrls)
             num = numUrls;
         String[] arr = new String[num];
         UrlHolder crawl = head;
         for(int index = 0; index < num; index++){
-            uh[i] = crawl.getUrl();
+            arr[index] = crawl.getUrl();
             crawl = crawl.next;
         }
         return arr;
     }
 
-
+    public String[] getSites() {
+        return getSites(numUrls);
+    }
 
     public int compareTo(Word w) {
         return word.compareTo(w.getWord());
@@ -113,5 +120,15 @@ public class Word {
 
     public int compareTo(String str) {
         return word.compareTo(str);
+    }
+
+    public String toString() {
+        String str = word + "\n";
+        UrlHolder crawl = head;
+        for(int i = 0; i < numUrls; i++) {
+            str += "\t" + crawl + "\n";
+            crawl = crawl.next;
+        }
+        return str;
     }
 }

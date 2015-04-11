@@ -4,25 +4,32 @@ public class SortTest {
 
 
     public static void main(String[] args) {
-        ArrayList<String> strs = new ArrayList<String>();
-        String[] s = "ඎ😁abcdefghijklmnopqrstuABCZvwxyz~`!@#$%^&*()_+{}:\"<>?|1234567890-=[]\\;',./".split("");
 
-        for(String a : s)
-            strs.add(a);
 
-        strs.add("aa");
-        strs.add("!!");
+        //System.out.println("zoo".compareTo("z"));
 
-        strs.sort((a,b)->a.compareTo(b));
-        /*
-        for(String a : strs)
-            System.out.println(a);
-        */
+        TableList list = new TableList();
 
-        String a = "zhis is a ";
-        int fl = a.charAt(0);
-        System.out.println((int)fl-97);
+        String google = "http://www.google.com/";
+        String yahoo = "http://www.yahoo.com/";
+        String bing = "http://www.bing.com/";
+        String nickguys = "http://www.nickguys.com/";
 
-        System.out.println("a".compareTo("d"));
+        list.add("the", google);
+        list.add("the", google);
+        list.add("the", google);
+
+        list.add("the", yahoo);
+        list.add("the", yahoo);
+
+        list.add("the", bing);
+
+        list.add("zoo", google);
+
+        System.out.println(list);
+
+        for(String s : list.getWord("zoo").getSites()) {
+            System.out.println(s);
+        }
     }
 }

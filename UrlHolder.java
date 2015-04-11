@@ -1,4 +1,5 @@
 public class UrlHolder {
+
     public UrlHolder next;
     public UrlHolder prev;
     private String url;
@@ -25,4 +26,7 @@ public class UrlHolder {
         return other.getFreq() - this.freq;
     }
 
+    public String toString() {
+        return url + " :: " + freq;
+    }
 }
