@@ -4,17 +4,24 @@ public class Crawler {
 
     private CrawlSet urlList;
     private int urlCount;
+    private boolean run;
+
+    private static int numCrawlers = 0;
 
     private static final int URL_COUNT_MAX = 20;
     private static final double ELAPSED_TIME_MAX = 4;
 
     public Crawler(String seed) {
+        numCrawlers ++;
         urlList = new CrawlSet()
         urlList.add(seed);
+    }
 
+    public void crawl() {
+        run = true;
         Links link;
         String url, curURL = seed, lastURL;
-        while (urlList.size() > 0 && Engine.runThreads) {
+        while (run && urlList.size() > 0 && Engine.runThreads) {
             url = urlList.remove().trim();
             link = new Links(url);
             lastURL = curURL.trim();
@@ -48,5 +55,14 @@ public class Crawler {
 
             }
         }
+        numCrawlers--;
+    }
+
+    public void kill() {
+        run = false;
+    }
+
+    public static int getNumCrawlers() {
+        return numCrawlers;
     }
 }
