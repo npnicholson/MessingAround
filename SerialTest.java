@@ -33,6 +33,8 @@ public class SerialTest{
             for(char s : saveData.getData()){
                 System.out.println(s);
             }
+
+            System.out.println(saveData);
         }
     }
 }

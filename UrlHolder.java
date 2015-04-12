@@ -1,4 +1,5 @@
-public class UrlHolder {
+import java.io.Serializable;
+public class UrlHolder implements Serializable{
 
     public UrlHolder next;
     public UrlHolder prev;
@@ -27,6 +28,6 @@ public class UrlHolder {
     }
 
     public String toString() {
-        return url + " :: " + freq;
+        return url + " :: " + Engine.setColor(Engine.HIGHLIGHT) + freq + Engine.restoreColor();
     }
 }

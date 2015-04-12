@@ -1,4 +1,5 @@
-public class Word {
+import java.io.Serializable;
+public class Word implements Serializable{
 
     public Word next;
     private String word;
@@ -123,7 +124,7 @@ public class Word {
     }
 
     public String toString() {
-        String str = word + "\n";
+        String str = Engine.colorWrapR(Engine.MENUC,word) + "\n";
         UrlHolder crawl = head;
         for(int i = 0; i < numUrls; i++) {
             str += "\t" + crawl + "\n";

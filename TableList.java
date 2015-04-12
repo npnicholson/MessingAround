@@ -1,4 +1,5 @@
-public class TableList {
+import java.io.Serializable;
+public class TableList  implements Serializable{
 
     private Word[] alph;
     private int numWords;
@@ -39,14 +40,14 @@ public class TableList {
         return null;
     }
 
-    public void add(String word, String url) {
+    public synchronized void add(String word, String url) {
         Word w = addWord(word);
         if (w != null) {
             w.addUrl(url);
         }
     }
 
-    public Word getWord(String w) {
+    public synchronized Word getWord(String w) {
         Word index;
         String word = w.toLowerCase();
         int firstLetter = word.charAt(0) - 97;
@@ -62,7 +63,7 @@ public class TableList {
         return null;
     }
 
-    public String[] getSites(String w) {
+    public synchronized String[] getSites(String w) {
         return getWord(w).getSites();
     }
 
@@ -70,7 +71,7 @@ public class TableList {
         return numWords;
     }
 
-    public String toString() {
+    public synchronized String toString() {
         String str = "";
         Word crawl = alph[0];
         for(int i = 0; i < numWords; i++) {

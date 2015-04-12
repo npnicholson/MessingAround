@@ -18,7 +18,7 @@ public class CrawlSet {
 
     public int size() { return count; }
 
-    public boolean add(String elt) {
+    public synchronized boolean add(String elt) {
         if (!contains(elt)) {
             if (count == contents.length)
                 expandCapacity();
@@ -29,9 +29,16 @@ public class CrawlSet {
         return false;
     }
 
-    public boolean contains(String elt) {
+    public synchronized boolean contains(String elt) {
         for (String t : contents)
             if (t==elt)
+                return true;
+        return false;
+    }
+
+    public synchronized boolean containsContent(String elt) {
+        for (String t : contents)
+            if (t != null && t.equals(elt))
                 return true;
         return false;
     }
@@ -43,7 +50,7 @@ public class CrawlSet {
         contents = newArray;
     }
 
-    public String removeRandom(){
+    public synchronized String removeRandom(){
         if(count == 0)
             return null;
         int choice = rand.nextInt(count);
@@ -54,7 +61,7 @@ public class CrawlSet {
         return result;
     }
 
-    public String remove(String elt){
+    public synchronized String remove(String elt){
         for(int i = 0; i < count; i++){
             if(contents[i].equals(elt)){
                 String result = contents[i];
@@ -67,7 +74,7 @@ public class CrawlSet {
         return null;
     }
 
-    public String remove(){
+    public synchronized String remove(){
         if(count == 0)
             return null;
         int choice = count-1;
@@ -77,7 +84,7 @@ public class CrawlSet {
         return result;
     }
 
-    public String remove(int index) {
+    public synchronized String remove(int index) {
         if(count == 0)
             return null;
         String result = contents[index];
@@ -86,7 +93,7 @@ public class CrawlSet {
         return result;
     }
 
-    public void removeContaining(String content){
+    public synchronized void removeContaining(String content){
 
         for(int i = 0; i < count; i++) {
             while(contents[i].indexOf(content) != -1) {

@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import java.util.StringTokenizer;
 
-public class Crawler {
+public class Crawler2 {
 
     private CrawlSet urls = new CrawlSet();
     private TableList table = new TableList();
@@ -32,7 +32,7 @@ public class Crawler {
     private Scanner scan = new Scanner(System.in);
     private int count = 0;
 
-    public Crawler(String seed){
+    public Crawler2(String seed){
         knownURLS = fileIn(logPath);
         lastURL = "";
         curURL = seed;

@@ -20,7 +20,7 @@ public class Links {
 
     public Links(String url) throws IOException{
 
-        URL this.url = new URL(url);
+        this.url = new URL(url);
 
 
         data = new ArrayList<String>();
