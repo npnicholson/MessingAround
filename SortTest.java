@@ -19,17 +19,22 @@ public class SortTest {
         list.add("the", google);
         list.add("the", google);
 
+        //System.out.println("google");
+
         list.add("the", yahoo);
         list.add("the", yahoo);
 
         list.add("the", bing);
+        list.add("the", bing);
+
+        list.add("the", bing+" lol");
 
         list.add("zoo", google);
 
         System.out.println(list);
 
-        for(String s : list.getWord("zoo").getSites()) {
+        /*for(String s : list.getWord("zoo").getSites()) {
             System.out.println(s);
-        }
+        }*/
     }
 }

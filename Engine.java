@@ -1,8 +1,9 @@
 import java.util.Scanner;
-
+import java.io.*;
+import java.util.ArrayList;
 public class Engine {
     private static Scanner scan = new Scanner(System.in);
-    public static CrawlSet knownURLS = new CrawlSet();
+    public static CrawlSet knownURLS;
     public static TableList table = new TableList();
 
     public static final int MENUC = 6;
@@ -11,8 +12,23 @@ public class Engine {
 
     public static boolean runThreads = true;
     public static boolean runStatus = false;
+
+    public static final String TMPPATH = "wordData/";
     public static void main (String[] args) {
         System.out.print(colorWrapR(MENUC,"--Engine main--\nInit..."));
+
+        File theDir = new File("engine/");
+        try{
+            theDir.mkdirs();
+        } 
+        catch(SecurityException se){ } 
+        try{
+            knownURLS = (CrawlSet) recover("engine/knownURLS.bin");
+        } catch(IOException e){}
+        if(knownURLS == null) {
+            knownURLS = new CrawlSet();
+            System.out.println("\n\tCreating new url list...");
+        }
 
         System.out.print(colorWrap(HIGHLIGHT,MENUC,"Done.") + "\nStarting Crawlers...");
 
@@ -77,7 +93,45 @@ public class Engine {
     }
 
     public static void search (String terms) {
+        String[] words = terms.split(" ");
+        String[] list;
 
+        ArrayList<String> us = new ArrayList<String>();
+        for(String s : words) {
+            list = table.getSites(s);
+            if(list == null)
+                continue;
+
+            for(String a : list) {
+                us.add(a);
+            }
+        }
+
+        ArrayList<String> fin = new ArrayList<String>();
+        ArrayList<Integer> finint = new ArrayList<Integer>();
+        Integer tmp; int index; int max = 0; int tmpint; int maxIndex = -1;
+        for(int i = 0; i < us.size(); i++) {
+            index = fin.indexOf(us.get(i));
+            if(index != -1) {
+                tmpint = finint.get(index)+1;
+                tmp = new Integer(finint.get(index)+1);
+                finint.set(index,tmp);
+
+                if(tmpint > max) {
+                    max = tmpint;
+                    maxIndex = index;
+                }
+            }else{
+                fin.add(us.get(i));
+                finint.add(new Integer(1));
+            }
+        }
+
+        System.out.println("Result: " + fin.get(maxIndex) + "\n\n");
+
+        for(int i = 0; i < fin.size(); i++) {
+            System.out.println(fin.get(i) + " :: " + finint.get(i));
+        }
     }
 
     private static void quit(){
@@ -92,8 +146,8 @@ public class Engine {
         }
 
         System.out.println("Done." + restoreColor());
-
-        System.out.println(table);
+        serialize(knownURLS,"engine/knownURLS.bin");
+        //System.out.println(table);
     }
 
     public static String setColor(int n) {
@@ -110,5 +164,35 @@ public class Engine {
 
     public static String colorWrapR(int before, String str) {
         return setColor(before) + str + restoreColor();
+    }
+
+    public static void serialize(Object o, String filename){
+        try{
+            //File theDir = new File(filename);
+            //theDir.mkdirs();
+            FileOutputStream fileOut = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(o);
+            out.close();
+            fileOut.close();
+            //System.out.println("Serialized data is saved in "+filename);
+        }catch(IOException i){
+            i.printStackTrace();
+        }//catch(SecurityException se){ } 
+    }
+
+    public static Object recover(String filename) throws IOException {
+        Object saveData;
+        try{
+            FileInputStream fileIn = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            saveData = in.readObject();
+            in.close();
+            fileIn.close();
+            return saveData;
+        } catch (ClassNotFoundException e) {
+            return null;
+        }
+        
     }
 }

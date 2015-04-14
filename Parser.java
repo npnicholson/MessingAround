@@ -10,7 +10,7 @@ public class Parser implements Runnable {
     }
 
     public void run(){
-        StringTokenizer st = new StringTokenizer(text, " ,.;:?!()\n");
+        StringTokenizer st = new StringTokenizer(text, " /\\…\",.;:?!()\n");
 
         while (Engine.runThreads && st.hasMoreElements()) {
             Engine.table.add(((String)st.nextElement()), url);

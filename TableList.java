@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.io.*;
 public class TableList  implements Serializable{
 
     private Word[] alph;
@@ -15,6 +16,24 @@ public class TableList  implements Serializable{
         }
         alph[alph.length-1].next = alph[0];
         numWords = alph.length;
+
+        File[] files = new File(Engine.TMPPATH).listFiles();
+        for(File f : files){
+            //System.out.println("Directory: " + f.getName());
+            if(!contains(letters,f.getName())){sub
+                addWord(f.getName());
+            }
+        }
+
+
+    }
+
+    private boolean contains(String[] string, String in) {
+        for(String s : string) {
+            if(s.equals(in))
+                return true;
+        }
+        return false;
     }
 
     private Word addWord(String w) {

@@ -5,7 +5,7 @@ public class SerialTest{
             try{
                 SaveObject saveData = new SaveObject("This is fjafyegfjhsfhdabfhjwbchjafhjadhjvhjdskavfhjds adjs hjdsabcd bbdha dsbc dsb hbchjsabcjs dbcydsa fcatvwuwyabcs hawybcfu vc adsc avucg kadscas a test!!");
                 FileOutputStream fileOut =
-                new FileOutputStream("test.ser");
+                new FileOutputStream("tmp/test.ser");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(saveData);
                 out.close();
@@ -17,7 +17,7 @@ public class SerialTest{
         }else if(args[0].equals("read")){
             SaveObject saveData;
             try{
-                FileInputStream fileIn = new FileInputStream("test.ser");
+                FileInputStream fileIn = new FileInputStream("tmp/test.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 saveData = (SaveObject) in.readObject();
                 in.close();

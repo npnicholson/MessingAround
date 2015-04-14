@@ -1,6 +1,6 @@
 import java.util.Random;
-
-public class CrawlSet {
+import java.io.Serializable;
+public class CrawlSet implements Serializable{
     private String[] contents;
     private final int SIZEINC = 100;
     private Random rand;
